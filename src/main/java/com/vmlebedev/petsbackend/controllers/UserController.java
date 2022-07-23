@@ -13,10 +13,11 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import java.awt.*;
+import java.net.URI;
 import java.util.List;
 
-@Controller
-@RequestMapping("/")
+@RestController
+@RequestMapping("/user")
 public class UserController {
     private UserService userService;
 
@@ -25,20 +26,16 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping
-    public ModelAndView index(ModelAndView modelAndView, HttpServletRequest request){
-        modelAndView.setViewName("index");
-        return modelAndView;
+    @PostMapping(
+            value = "/addUser",
+            consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
+            produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+    public ResponseEntity<User> add(@RequestBody User user) {
+        userService.saveUser(user);
+        return ResponseEntity
+                .created(URI
+                        .create(String.format("/users/%s", user.getLogin() + user.getPassword())))
+                            .body(user);
     }
-    /*
-    @RequestMapping(value = "/toDos", method={RequestMethod.GET},
-    produces = {
-            MediaType.APPLICATION_JSON_VALUE,
-            MediaType.APPLICATION_XML_VALUE,
-            MediaType.TEXT_XML_VALUE
-    })
-    public ResponseEntity<Iterable<User>> getUsers(@RequestHeader HttpHeaders headers){
 
-    }
-    */
 }
