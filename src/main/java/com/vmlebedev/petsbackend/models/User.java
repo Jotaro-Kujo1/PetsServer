@@ -14,12 +14,10 @@ import javax.persistence.*;
 public class User {
     @NotNull
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @JsonProperty("id")
     private int id;
     @JsonProperty("login")
     private String login;
     @JsonProperty("password")
     private String password;
-
 }

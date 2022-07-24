@@ -35,12 +35,12 @@ public class UserController {
         }
     }
 
-    @RequestMapping(value = "/user", method = {RequestMethod.POST, RequestMethod.PUT})
+    @RequestMapping(value = "/user", method = {RequestMethod.POST})
     public ResponseEntity<User> createUser(@RequestBody User user){
         User result = userService.saveUser(user);
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest()
-                .path("/{id}")
+                .path(Integer.toString(user.getId()))
                 .buildAndExpand(result.getLogin())
                 .toUri();
         return ResponseEntity.created(location).build();
