@@ -1,19 +1,25 @@
 package com.vmlebedev.petsbackend.models;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.sun.istack.NotNull;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
-@Data
 @Entity
-@Table(name = "user")
+@Data
+@NoArgsConstructor
+@Table(name = "users", schema = "public")
 public class User {
+    @NotNull
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @JsonProperty("id")
     private int id;
-    @Column(name = "Login")
+    @JsonProperty("login")
     private String login;
-    @Column(name = "Password")
+    @JsonProperty("password")
     private String password;
 
 }

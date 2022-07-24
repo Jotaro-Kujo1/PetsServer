@@ -20,7 +20,7 @@ public class UserService {
         return userRepository.findById(id).orElse(null);
     }
     public List<User> findAll(){
-        return userRepository.findAll();
+        return (List<User>) userRepository.findAll();
     }
     public User saveUser(User user){
         return userRepository.save(user);

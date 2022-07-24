@@ -1,41 +1,58 @@
 package com.vmlebedev.petsbackend.controllers;
 
+import com.vmlebedev.petsbackend.models.User;
 import com.vmlebedev.petsbackend.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import com.vmlebedev.petsbackend.models.User;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import javax.servlet.http.HttpServletRequest;
-import java.awt.*;
 import java.net.URI;
-import java.util.List;
+import java.util.Optional;
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/forUsers")
 public class UserController {
     private UserService userService;
 
     @Autowired
-    public UserController(UserService userService){
+    public UserController(UserService userService) {
         this.userService = userService;
     }
 
-    @PostMapping(
-            value = "/addUser",
-            consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
-            produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
-    public ResponseEntity<User> add(@RequestBody User user) {
-        userService.saveUser(user);
-        return ResponseEntity
-                .created(URI
-                        .create(String.format("/users/%s", user.getLogin() + user.getPassword())))
-                            .body(user);
+    @GetMapping("/user")
+    public ResponseEntity<Iterable<User>> getUsers() {
+        return ResponseEntity.ok(userService.findAll());
     }
 
+    @GetMapping("/user/{id}")
+    public ResponseEntity<User> getUserById(@PathVariable int id){
+        Optional<User> user = Optional.ofNullable(userService.findById(id));
+        if(user.isPresent()){
+            return ResponseEntity.ok(user.get());
+        }else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @RequestMapping(value = "/user", method = {RequestMethod.POST, RequestMethod.PUT})
+    public ResponseEntity<User> createUser(@RequestBody User user){
+        User result = userService.saveUser(user);
+        URI location = ServletUriComponentsBuilder
+                .fromCurrentRequest()
+                .path("/{id}")
+                .buildAndExpand(result.getLogin())
+                .toUri();
+        return ResponseEntity.created(location).build();
+    }
+
+    @DeleteMapping(value = "/user/{id}")
+    public ResponseEntity<User> deleteUser(@PathVariable int id){
+        userService.deleteById(id);
+        return ResponseEntity.noContent().build();
+    }
+
+
+
 }
+//alt+o+l
