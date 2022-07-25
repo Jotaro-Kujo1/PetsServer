@@ -12,6 +12,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/forUsers")
+@CrossOrigin
 public class UserController {
     private UserService userService;
 
@@ -40,7 +41,7 @@ public class UserController {
         User result = userService.saveUser(user);
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest()
-                .path(Integer.toString(user.getId()))
+                .path(user.getId())
                 .buildAndExpand(result.getLogin())
                 .toUri();
         return ResponseEntity.created(location).build();

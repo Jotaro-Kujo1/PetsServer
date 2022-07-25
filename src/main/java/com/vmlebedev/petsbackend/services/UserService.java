@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
+
 @Service//Показывает что это компонент спринга
 //Принимает запросы из вне и дёргает репозиторный метод
 public class UserService {
@@ -23,6 +25,8 @@ public class UserService {
         return (List<User>) userRepository.findAll();
     }
     public User saveUser(User user){
+        String uniqueKey = UUID.randomUUID().toString();
+        user.setId(uniqueKey);
         return userRepository.save(user);
     }
     public void deleteById(int id){
