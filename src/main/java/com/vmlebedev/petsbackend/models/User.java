@@ -13,7 +13,6 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Table(name = "users", schema = "public")
 public class User {
-    @NotNull
     @Id
     @JsonProperty("id")
     @GeneratedValue(generator = "system-uuid")

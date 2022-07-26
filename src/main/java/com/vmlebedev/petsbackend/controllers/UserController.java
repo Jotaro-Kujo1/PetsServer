@@ -8,7 +8,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/forUsers")
@@ -26,11 +28,13 @@ public class UserController {
         return ResponseEntity.ok(userService.findAll());
     }
 
-    @GetMapping("/user/{id}")
-    public ResponseEntity<User> getUserById(@PathVariable int id){
-        Optional<User> user = Optional.ofNullable(userService.findById(id));
-        if(user.isPresent()){
-            return ResponseEntity.ok(user.get());
+
+    //Sign in
+    @RequestMapping(value = "/user/checkUser", method = {RequestMethod.POST})
+    public ResponseEntity<?> userCheck(@RequestBody User user){
+        User result = userService.findByLogin(user);
+        if(result!=null){
+            return ResponseEntity.ok(user.getLogin());
         }else {
             return ResponseEntity.notFound().build();
         }
