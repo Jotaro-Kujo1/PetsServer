@@ -46,4 +46,14 @@ public class UserService {
         }
         else return null;
     }
+
+    public User checkLogin(User user){
+        boolean check =
+                findAll()
+                        .stream()
+                        .anyMatch(s->s.getLogin().equals(user.getLogin()));
+        if(check){
+            return user;
+        }else return null;
+    }
 }

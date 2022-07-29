@@ -42,13 +42,18 @@ public class UserController {
 
     @RequestMapping(value = "/user", method = {RequestMethod.POST})
     public ResponseEntity<User> createUser(@RequestBody User user){
-        User result = userService.saveUser(user);
-        URI location = ServletUriComponentsBuilder
-                .fromCurrentRequest()
-                .path(user.getId())
-                .buildAndExpand(result.getLogin())
-                .toUri();
-        return ResponseEntity.created(location).build();
+        if(userService.checkLogin(user)==null){
+            User result = userService.saveUser(user);
+            URI location = ServletUriComponentsBuilder
+                    .fromCurrentRequest()
+                    .path(user.getId())
+                    .buildAndExpand(result.getLogin())
+                    .toUri();
+            return ResponseEntity.created(location).build();
+        }else {
+            return ResponseEntity.status(404).build();
+        }
+
     }
 
     @DeleteMapping(value = "/user/{id}")
