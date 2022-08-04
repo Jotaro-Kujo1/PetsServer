@@ -56,4 +56,11 @@ public class UserService {
             return user;
         }else return null;
     }
+
+    public boolean checkLogin(String login){
+        return
+                findAll()
+                        .stream()
+                        .anyMatch(s->s.getLogin().equals(login));
+    }
 }
