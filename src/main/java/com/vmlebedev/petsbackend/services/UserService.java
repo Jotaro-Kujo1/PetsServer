@@ -21,7 +21,7 @@ public class UserService {
     }
 
 
-    public User findById(int id){
+    public User findById(String id){
         return userRepository.findById(id).orElse(null);
     }
     public List<User> findAll(){
@@ -32,7 +32,7 @@ public class UserService {
         user.setId(uniqueKey);
         return userRepository.save(user);
     }
-    public void deleteById(int id){
+    public void deleteById(String id){
         userRepository.deleteById(id);
     }
 
