@@ -33,8 +33,9 @@ public class PostController {
 
 
     @RequestMapping(value = "/byteConverter", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<byte[]> byteConverter(@RequestParam("file") MultipartFile multipartFile){
-        byte [] arr = postService.toByteArrConverter(multipartFile);
+    public ResponseEntity<?> byteConverter(@RequestParam("file") MultipartFile multipartFile){
+        byte[] arr =postService.toByteArrConverter(multipartFile);
+
         if(arr!=null){
             return ResponseEntity.ok(arr);
         }else{
