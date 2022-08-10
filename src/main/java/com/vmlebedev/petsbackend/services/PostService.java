@@ -11,6 +11,7 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 import java.util.UUID;
 
@@ -48,8 +49,13 @@ public class PostService {
         return postRepository.save(post);
     }
 
-    public byte[] toByteArrConverter(MultipartFile file) throws IOException {
-        return file.getBytes();
+    public byte[] toByteArrConverter(MultipartFile file){
+        try(InputStream is = file.getInputStream()){
+            return is.readAllBytes();
+        }catch (IOException ex){
+            ex.printStackTrace();
+            return null;
+        }
         /*
         BufferedImage bImage = ImageIO.read(file);
         ByteArrayOutputStream bos = new ByteArrayOutputStream();

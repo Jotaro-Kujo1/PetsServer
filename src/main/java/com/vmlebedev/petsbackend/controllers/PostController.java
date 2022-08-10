@@ -3,6 +3,7 @@ package com.vmlebedev.petsbackend.controllers;
 import com.vmlebedev.petsbackend.models.Post;
 import com.vmlebedev.petsbackend.services.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -32,13 +33,12 @@ public class PostController {
 
 
     @RequestMapping(value = "/byteConverter", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<?> byteConverter(@RequestParam("file") MultipartFile multipartFile){
-        try {
-            byte[] arr = postService.toByteArrConverter(multipartFile);
+    public ResponseEntity<byte[]> byteConverter(@RequestParam("file") MultipartFile multipartFile){
+        byte [] arr = postService.toByteArrConverter(multipartFile);
+        if(arr!=null){
             return ResponseEntity.ok(arr);
-        }catch (IOException ex){
-            ex.printStackTrace();
-            return null;
+        }else{
+            return ResponseEntity.status(404).build();
         }
     }
 
