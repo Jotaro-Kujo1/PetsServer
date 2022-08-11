@@ -12,6 +12,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Base64;
 import java.util.List;
 import java.util.UUID;
 
@@ -44,6 +45,7 @@ public class PostService {
     }
 
     public Post savePost(Post post){
+        post.setImg(byteEncoded(post.getHandler()));
         String uniqueKey = UUID.randomUUID().toString();
         post.setId(uniqueKey);
         return postRepository.save(post);
@@ -56,11 +58,13 @@ public class PostService {
             ex.printStackTrace();
             return null;
         }
-        /*
-        BufferedImage bImage = ImageIO.read(file);
-        ByteArrayOutputStream bos = new ByteArrayOutputStream();
-        ImageIO.write(bImage, "png", bos);
-        return bos.toByteArray();
-         */
+    }
+
+    public byte[] byteEncoded(String str){
+        return Base64.getEncoder().encode(str.getBytes());
+    }
+
+    public byte[] byteDecoded(String str){
+        return Base64.getDecoder().decode(str);
     }
 }
