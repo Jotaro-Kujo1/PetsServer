@@ -13,6 +13,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.io.File;
 import java.io.IOException;
 import java.net.URI;
+import java.util.List;
 
 @RestController
 @RequestMapping("/posts")
@@ -58,6 +59,11 @@ public class PostController {
         }else {
             return ResponseEntity.status(404).build();
         }
+    }
+
+    @GetMapping("/getAllPosts")
+    public ResponseEntity<Iterable<Post>> getAllPosts(){
+        return ResponseEntity.ok(postService.findAll());
     }
 
     @DeleteMapping(value = "post/{id}")

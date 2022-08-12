@@ -45,7 +45,6 @@ public class PostService {
     }
 
     public Post savePost(Post post){
-        post.setImg(byteEncoded(post.getHandler()));
         String uniqueKey = UUID.randomUUID().toString();
         post.setId(uniqueKey);
         return postRepository.save(post);
@@ -60,11 +59,7 @@ public class PostService {
         }
     }
 
-    public byte[] byteEncoded(String str){
-        return Base64.getEncoder().encode(str.getBytes());
-    }
 
-    public byte[] byteDecoded(String str){
-        return Base64.getDecoder().decode(str);
-    }
+
+
 }
