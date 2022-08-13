@@ -27,11 +27,6 @@ public class PostController {
     }
 
 
-    @GetMapping("/allPosts")
-    public ResponseEntity<Iterable<Post>> getAllUPosts(){
-        return ResponseEntity.ok(postService.findAll());
-    }
-
 
     @RequestMapping(value = "/byteConverter", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<?> byteConverter(@RequestParam("file") MultipartFile multipartFile){
@@ -61,7 +56,7 @@ public class PostController {
         }
     }
 
-    @GetMapping("/getAllPosts")
+    @GetMapping(value = "/getAllPosts")
     public ResponseEntity<Iterable<Post>> getAllPosts(){
         return ResponseEntity.ok(postService.findAll());
     }

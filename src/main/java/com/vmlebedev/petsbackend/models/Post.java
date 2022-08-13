@@ -19,12 +19,14 @@ public class Post {
     @GenericGenerator(name = "system-uuid", strategy = "uuid")
     private String id;
     @JsonProperty("img")
-    private byte [] img;
+    private byte[] img;
     @JsonProperty("description")
     private String description;
     @JsonProperty("address")
     private String address;
     @JsonProperty("user_name")
     private String user_name;
-
+    @JsonProperty("handler")
+    @Transient
+    private String handler;
 }
