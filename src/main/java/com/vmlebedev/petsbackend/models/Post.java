@@ -27,6 +27,5 @@ public class Post {
     @JsonProperty("user_name")
     private String user_name;
     @JsonProperty("handler")
-    @Transient
     private String handler;
 }
