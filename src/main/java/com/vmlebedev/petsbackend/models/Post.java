@@ -28,4 +28,6 @@ public class Post {
     private String user_name;
     @JsonProperty("handler")
     private String handler;
+    @JsonProperty("date")
+    private String date;
 }
