@@ -12,6 +12,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -25,7 +26,9 @@ public class PostService {
     }
 
     public List<Post> findAll(){
-        return (List<Post>) postRepository.findAll();
+        List<Post> list = (List<Post>) postRepository.findAll();
+        Collections.reverse(list);
+        return list;
     }
 
     public void deleteById(String id){
