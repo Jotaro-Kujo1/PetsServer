@@ -50,6 +50,8 @@ public class PostService {
         post.setImg(byteEncoded(post.getHandler()));
         SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm");
         post.setDate(formatter.format(new Date()));
+        post.setArea(areaParse(post.getAddress()));
+        post.setAddress(addressParse(post.getAddress()));
         String uniqueKey = UUID.randomUUID().toString();
         post.setId(uniqueKey);
         return postRepository.save(post);
@@ -68,6 +70,20 @@ public class PostService {
         return Base64.getEncoder().encode(str.getBytes());
     }
 
+    public String areaParse(String address){
+        char [] tmp = new char[address.length()-(address.trim().indexOf(",")+1)];
+        address.getChars((address.trim().indexOf(","))+1,address.length(),tmp,0);
+        System.out.println(tmp);
+        return new String(tmp);
+    }
 
+    public String addressParse(String address){
+        char [] tmp = new char[address.length()-(address.trim().indexOf(",")+1)];
+        address.getChars((address.trim().indexOf(","))+1,address.length(),tmp,0);
+        String newStr = new String(tmp);
+        address = address.replace(newStr, "");
+        address = address.substring(0,address.length()-1);
+        return address;
+    }
 
 }

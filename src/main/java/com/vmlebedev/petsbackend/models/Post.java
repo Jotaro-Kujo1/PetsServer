@@ -30,4 +30,6 @@ public class Post {
     private String handler;
     @JsonProperty("date")
     private String date;
+    @JsonProperty("area")
+    private String area;
 }
