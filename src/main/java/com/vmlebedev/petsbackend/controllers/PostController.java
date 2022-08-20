@@ -24,9 +24,6 @@ public class PostController {
     }
 
 
-
-
-
     @RequestMapping(value = "/byteConverter", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<?> byteConverter(@RequestParam("file") MultipartFile multipartFile){
         byte[] arr =postService.toByteArrConverter(multipartFile);
@@ -64,5 +61,15 @@ public class PostController {
     public ResponseEntity<Post> deletePost(@PathVariable String id){
         postService.deleteById(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping(value = "getAllForArea/{area}")
+    public ResponseEntity<Iterable<Post>> getAllPostsForArea(@PathVariable String area){
+        return ResponseEntity.ok(postService.findAllByArea(area));
+    }
+
+    @GetMapping(value = "getAllUsersPosts/{userName}")
+    public ResponseEntity<Iterable<Post>> getAllUsersPosts(@PathVariable String userName){
+        return ResponseEntity.ok(postService.finaAllByUserName(userName));
     }
 }

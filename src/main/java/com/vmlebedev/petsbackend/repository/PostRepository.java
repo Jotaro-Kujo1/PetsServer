@@ -8,5 +8,5 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface PostRepository extends CrudRepository<Post, String> {
-
+    List<Post> findAllByArea(String area);
 }
