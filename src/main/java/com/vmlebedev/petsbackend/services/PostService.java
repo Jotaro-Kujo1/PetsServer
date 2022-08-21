@@ -32,7 +32,9 @@ public class PostService {
     }
 
     public List<Post> findAllByArea(String area){
-        return postRepository.findAllByArea(area);
+        List<Post> list = postRepository.findAllByArea(area);
+        Collections.reverse(list);
+        return list;
     }
 
     public List<Post> finaAllByUserName(String username){
