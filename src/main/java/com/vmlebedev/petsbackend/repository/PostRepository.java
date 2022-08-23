@@ -9,4 +9,6 @@ import java.util.List;
 
 public interface PostRepository extends CrudRepository<Post, String> {
     List<Post> findAllByArea(String area);
+    List<Post> findAllByState(boolean state);
+    List<Post> findAllByStateAndArea(boolean state, String area);
 }

@@ -32,4 +32,6 @@ public class Post {
     private String date;
     @JsonProperty("area")
     private String area;
+    @JsonProperty("state")
+    private boolean state;
 }

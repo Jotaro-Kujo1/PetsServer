@@ -96,4 +96,12 @@ public class PostService {
         return address;
     }
 
+
+    public List<Post> findAllByState(boolean state){
+        return postRepository.findAllByState(state);
+    }
+
+    public List<Post> findAllByStateAndArea(boolean state, String area){
+        return postRepository.findAllByStateAndArea(state,area);
+    }
 }
