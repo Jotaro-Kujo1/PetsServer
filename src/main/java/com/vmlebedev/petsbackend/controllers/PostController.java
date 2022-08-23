@@ -52,10 +52,6 @@ public class PostController {
         }
     }
 
-    @GetMapping(value = "/getAllPosts")
-    public ResponseEntity<Iterable<Post>> getAllPosts(){
-        return ResponseEntity.ok(postService.findAll());
-    }
 
     @GetMapping(value = "/getAllPosts/lost")
     public ResponseEntity<Iterable<Post>> getAllLostPosts(){
@@ -73,14 +69,14 @@ public class PostController {
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping(value = "getAllForArea/{area}")
-    public ResponseEntity<Iterable<Post>> getAllPostsForArea(@PathVariable String area){
-        return ResponseEntity.ok(postService.findAllByArea(area));
-    }
-
     @GetMapping(value = "getLostForArea/{area}")
     public ResponseEntity<Iterable<Post>> getAllLostForArea(@PathVariable String area){
         return ResponseEntity.ok(postService.findAllByStateAndArea(true,area));
+    }
+
+    @GetMapping(value = "getSearchedForArea/{area}")
+    public ResponseEntity<Iterable<Post>> getAllSearchedForArea(@PathVariable String area){
+        return ResponseEntity.ok(postService.findAllByStateAndArea(false,area));
     }
 
     @GetMapping(value = "getAllUsersPosts/{userName}")
