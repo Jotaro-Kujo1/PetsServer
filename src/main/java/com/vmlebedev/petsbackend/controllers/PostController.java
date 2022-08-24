@@ -79,8 +79,8 @@ public class PostController {
         return ResponseEntity.ok(postService.findAllByStateAndArea(false,area));
     }
 
-    @GetMapping(value = "getAllUsersPosts/{userName}")
-    public ResponseEntity<Iterable<Post>> getAllUsersPosts(@PathVariable String userName){
-        return ResponseEntity.ok(postService.finaAllByUserName(userName));
+    @GetMapping(value = "getAllUsersPosts/{user}")
+    public ResponseEntity<Iterable<Post>> getAllUsersPosts(@PathVariable String user){
+        return ResponseEntity.ok(postService.findAllUsersPosts(user));
     }
 }

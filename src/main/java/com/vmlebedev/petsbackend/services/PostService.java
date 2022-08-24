@@ -37,9 +37,12 @@ public class PostService {
         return list;
     }
 
-    public List<Post> finaAllByUserName(String username){
-        return postRepository.findAllByArea(username);
+    public List<Post> findAllUsersPosts(String user){
+        List<Post> list = postRepository.findAllByUser(user);
+        Collections.reverse(list);
+        return list;
     }
+
 
     public void deleteById(String id){
         postRepository.deleteById(id);
