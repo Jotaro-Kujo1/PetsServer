@@ -12,6 +12,4 @@ public interface PostRepository extends CrudRepository<Post, String> {
     List<Post> findAllByState(boolean state);
     List<Post> findAllByStateAndArea(boolean state, String area);
     List<Post> findAllByLogin(String login);
-
-
 }

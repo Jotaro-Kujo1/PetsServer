@@ -5,14 +5,8 @@ import com.vmlebedev.petsbackend.repository.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -59,18 +53,7 @@ public class PostService {
         }else return true;
     }
 
-    /*
-    public Post savePost(Post post){
-        post.setImg(byteEncoded(post.getHandler()));
-        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm");
-        post.setDate(formatter.format(new Date()));
-        post.setArea(areaParse(post.getAddress()));
-        post.setAddress(addressParse(post.getAddress()));
-        String uniqueKey = UUID.randomUUID().toString();
-        post.setId(uniqueKey);
-        return postRepository.save(post);
-    }
-    */
+
     public Post savePost(Post post){
         post.setImg(byteEncoded(post.getHandler()));
         SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm");
@@ -123,4 +106,6 @@ public class PostService {
         Collections.reverse(list);
         return list;
     }
+
+
 }
