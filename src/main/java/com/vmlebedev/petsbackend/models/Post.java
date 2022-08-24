@@ -24,8 +24,8 @@ public class Post {
     private String description;
     @JsonProperty("address")
     private String address;
-    @JsonProperty("user")
-    private String user;
+    @JsonProperty("login")
+    private String login;
     @JsonProperty("handler")
     private String handler;
     @JsonProperty("date")

@@ -37,7 +37,7 @@ public class PostController {
 
 
 
-    @RequestMapping(value = "/createPost", method = {RequestMethod.POST})
+    @PostMapping(value = "/createPost")
     public ResponseEntity<Post> createPost(@RequestBody Post post){
         if(postService.checkPost(post)){
             Post newPost = postService.savePost(post);
@@ -51,7 +51,6 @@ public class PostController {
             return ResponseEntity.status(404).build();
         }
     }
-
 
     @GetMapping(value = "/getAllPosts/lost")
     public ResponseEntity<Iterable<Post>> getAllLostPosts(){
@@ -79,8 +78,8 @@ public class PostController {
         return ResponseEntity.ok(postService.findAllByStateAndArea(false,area));
     }
 
-    @GetMapping(value = "getAllUsersPosts/{user}")
-    public ResponseEntity<Iterable<Post>> getAllUsersPosts(@PathVariable String user){
-        return ResponseEntity.ok(postService.findAllUsersPosts(user));
+    @GetMapping(value = "getAllUsersPosts/{login}")
+    public ResponseEntity<Iterable<Post>> getAllUsersPosts(@PathVariable String login){
+        return ResponseEntity.ok(postService.findAllUsersPosts(login));
     }
 }

@@ -37,8 +37,8 @@ public class PostService {
         return list;
     }
 
-    public List<Post> findAllUsersPosts(String user){
-        List<Post> list = postRepository.findAllByUser(user);
+    public List<Post> findAllUsersPosts(String login){
+        List<Post> list = postRepository.findAllByLogin(login);
         Collections.reverse(list);
         return list;
     }
@@ -59,6 +59,18 @@ public class PostService {
         }else return true;
     }
 
+    /*
+    public Post savePost(Post post){
+        post.setImg(byteEncoded(post.getHandler()));
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm");
+        post.setDate(formatter.format(new Date()));
+        post.setArea(areaParse(post.getAddress()));
+        post.setAddress(addressParse(post.getAddress()));
+        String uniqueKey = UUID.randomUUID().toString();
+        post.setId(uniqueKey);
+        return postRepository.save(post);
+    }
+    */
     public Post savePost(Post post){
         post.setImg(byteEncoded(post.getHandler()));
         SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm");
@@ -101,10 +113,14 @@ public class PostService {
 
 
     public List<Post> findAllByState(boolean state){
-        return postRepository.findAllByState(state);
+        List<Post> list = postRepository.findAllByState(state);
+        Collections.reverse(list);
+        return list;
     }
 
     public List<Post> findAllByStateAndArea(boolean state, String area){
-        return postRepository.findAllByStateAndArea(state,area);
+        List<Post> list = postRepository.findAllByStateAndArea(state,area);
+        Collections.reverse(list);
+        return list;
     }
 }
