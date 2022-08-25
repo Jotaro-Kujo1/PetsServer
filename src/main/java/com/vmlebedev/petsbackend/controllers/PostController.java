@@ -81,4 +81,10 @@ public class PostController {
     public ResponseEntity<Iterable<Post>> getAllUsersPosts(@PathVariable String login){
         return ResponseEntity.ok(postService.findAllUsersPosts(login));
     }
+
+    @PostMapping(value = "/updatePicture")
+    public ResponseEntity<?> updatePicture(@RequestParam String login, @RequestParam String profimg){
+        postService.updatePictureAllUsersPosts(login,profimg);
+        return ResponseEntity.ok().build();
+    }
 }

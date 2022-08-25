@@ -34,4 +34,6 @@ public class Post {
     private String area;
     @JsonProperty("state")
     private boolean state;
+    @JsonProperty("profimg")
+    private String profimg;
 }

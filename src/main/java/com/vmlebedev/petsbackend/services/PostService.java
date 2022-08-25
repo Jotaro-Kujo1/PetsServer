@@ -107,5 +107,8 @@ public class PostService {
         return list;
     }
 
+    public void updatePictureAllUsersPosts(String login, String profimg){
+        postRepository.updatePosts(login,profimg);
+    }
 
 }
