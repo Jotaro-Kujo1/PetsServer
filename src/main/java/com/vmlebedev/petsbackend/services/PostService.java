@@ -1,6 +1,9 @@
 package com.vmlebedev.petsbackend.services;
 
 import com.vmlebedev.petsbackend.models.Post;
+import com.vmlebedev.petsbackend.postBuilder.ClassicPostBuilder;
+import com.vmlebedev.petsbackend.postBuilder.PostBuilder;
+import com.vmlebedev.petsbackend.postBuilder.PostDirector;
 import com.vmlebedev.petsbackend.repository.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -55,14 +58,37 @@ public class PostService {
 
 
     public Post savePost(Post post){
-        post.setImg(byteEncoded(post.getHandler()));
-        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm");
-        post.setDate(formatter.format(new Date()));
-        post.setArea(areaParse(post.getAddress()));
-        post.setAddress(addressParse(post.getAddress()));
-        String uniqueKey = UUID.randomUUID().toString();
-        post.setId(uniqueKey);
-        return postRepository.save(post);
+        return postRepository.save(
+                createNewPost(
+                        getImg(post.getHandler()),
+                        getAddress(post.getAddress()),
+                        getArea(post.getAddress()),
+                        post.getDescription(),
+                        post.getLogin(),
+                        post.getHandler(),
+                        post.isState(),
+                        post.getProfimg()
+                )
+        );
+    }
+
+    public byte [] getImg(String handler){
+        return byteEncoded(handler);
+    }
+
+    public String getAddress(String address){
+        return addressParse(address);
+    }
+
+    public String getArea(String address){
+        return areaParse(address);
+    }
+
+
+    public Post createNewPost(byte [] arr, String address, String area,String description, String login, String handler, boolean state, String profimg){
+        PostBuilder builder = new ClassicPostBuilder();
+        PostDirector postDirector = new PostDirector(builder);
+        return postDirector.createPost(arr,address,area,description,login,handler,state,profimg);
     }
 
     public byte[] toByteArrConverter(MultipartFile file){

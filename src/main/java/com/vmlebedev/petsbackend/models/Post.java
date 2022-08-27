@@ -1,6 +1,7 @@
 package com.vmlebedev.petsbackend.models;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
@@ -11,6 +12,7 @@ import javax.persistence.*;
 @Entity
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 @Table(name="posts", schema = "public")
 public class Post {
     @Id
@@ -36,4 +38,5 @@ public class Post {
     private boolean state;
     @JsonProperty("profimg")
     private String profimg;
+
 }
