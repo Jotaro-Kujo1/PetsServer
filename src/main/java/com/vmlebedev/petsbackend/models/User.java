@@ -9,9 +9,9 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 
 @Entity
+@AllArgsConstructor
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
 @Table(name = "users", schema = "public")
 public class User {
     @Id

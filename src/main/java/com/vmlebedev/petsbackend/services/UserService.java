@@ -34,6 +34,7 @@ public class UserService {
         userRepository.deleteById(id);
     }
 
+
     public User findByLogin(User user){
         boolean check =
                 findAll()
@@ -44,6 +45,7 @@ public class UserService {
         }
         else return null;
     }
+
 
     public User checkLogin(User user){
         boolean check =

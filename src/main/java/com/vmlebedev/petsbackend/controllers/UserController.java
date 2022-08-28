@@ -27,6 +27,7 @@ public class UserController {
     }
 
 
+
     //Sign in
     @RequestMapping(value = "/user/checkUser", method = {RequestMethod.POST})
     public ResponseEntity<?> userCheck(@RequestBody User user){
@@ -37,6 +38,8 @@ public class UserController {
             return ResponseEntity.notFound().build();
         }
     }
+
+
 
     @RequestMapping(value = "/user", method = {RequestMethod.POST})
     public ResponseEntity<User> createUser(@RequestBody User user){
@@ -59,8 +62,5 @@ public class UserController {
         userService.deleteById(id);
         return ResponseEntity.noContent().build();
     }
-
-
-
 }
 //alt+o+l
