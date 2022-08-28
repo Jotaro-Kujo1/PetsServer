@@ -2,6 +2,7 @@ package com.vmlebedev.petsbackend.controllers;
 
 import com.vmlebedev.petsbackend.models.Message;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.handler.annotation.SendTo;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import java.util.Date;
 
 @Controller
+@ComponentScan("/config")
 public class ChatController {
 
     @Autowired
