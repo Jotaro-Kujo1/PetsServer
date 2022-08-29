@@ -64,19 +64,29 @@ class UserControllerTest {
 
     @Test
     void userCheck() throws Exception{
-        User user = new User();
-        user.setLogin("TestLogin");
-        //Новый пользователь т.к. метод возвращает пользователя
-        Mockito.doReturn(new User())
-                .when(userService)
-                .findByLogin(user);
-        Assert.assertNotNull(user.getLogin());
+        User user1 = new User("test","TestLogin","TestPassword");
+        when(userService.findByLogin(user1)).thenReturn(user1);
+
+        mockMvc.perform(post("/forUsers/user/checkUser")
+                        .accept(MediaType.APPLICATION_JSON)
+                        .content(asJsonString(user1))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        )
+                .andExpect(status().isOk());
     }
 
 
     @Test
     void createUser() throws Exception{
+        User user1 = new User("test","TestLogin","TestPassword");
+        when(userService.saveUser(user1)).thenReturn(user1);
 
+        mockMvc.perform(post("/forUsers/user")
+                        .accept(MediaType.APPLICATION_JSON)
+                        .content(asJsonString(user1))
+                        .contentType(MediaType.APPLICATION_JSON)
+                )
+                .andExpect(status().isCreated());
     }
 
     private String asJsonString(final Object obj) {
@@ -87,7 +97,4 @@ class UserControllerTest {
         }
     }
 
-    @Test
-    void deleteUser() {
-    }
 }
