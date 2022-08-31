@@ -14,7 +14,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name="posts", schema = "public")
-public class Post {
+public class Post{
     @Id
     @JsonProperty("id")
     @GeneratedValue(generator = "system-uuid")
@@ -38,5 +38,7 @@ public class Post {
     private boolean state;
     @JsonProperty("profimg")
     private String profimg;
+
+
 
 }

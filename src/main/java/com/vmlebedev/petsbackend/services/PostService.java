@@ -24,19 +24,19 @@ public class PostService {
 
     public List<Post> findAll(){
         List<Post> list = (List<Post>) postRepository.findAll();
-        Collections.reverse(list);
+        list.sort((o1,o2)->o2.getDate().compareTo(o1.getDate()));
         return list;
     }
 
     public List<Post> findAllByArea(String area){
         List<Post> list = postRepository.findAllByArea(area);
-        Collections.reverse(list);
+        list.sort((o1,o2)->o2.getDate().compareTo(o1.getDate()));
         return list;
     }
 
     public List<Post> findAllUsersPosts(String login){
         List<Post> list = postRepository.findAllByLogin(login);
-        Collections.reverse(list);
+        list.sort((o1,o2)->o2.getDate().compareTo(o1.getDate()));
         return list;
     }
 
@@ -123,13 +123,13 @@ public class PostService {
 
     public List<Post> findAllByState(boolean state){
         List<Post> list = postRepository.findAllByState(state);
-        Collections.reverse(list);
+        list.sort((o1,o2)->o2.getDate().compareTo(o1.getDate()));
         return list;
     }
 
     public List<Post> findAllByStateAndArea(boolean state, String area){
         List<Post> list = postRepository.findAllByStateAndArea(state,area);
-        Collections.reverse(list);
+        list.sort((o1,o2)->o2.getDate().compareTo(o1.getDate()));
         return list;
     }
 

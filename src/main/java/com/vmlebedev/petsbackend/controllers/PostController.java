@@ -61,25 +61,30 @@ public class PostController {
         return ResponseEntity.ok(postService.findAllByState(false));
     }
 
-    @DeleteMapping(value = "post/{id}")
+    @DeleteMapping(value = "/post/{id}")
     public ResponseEntity<Post> deletePost(@PathVariable String id){
         postService.deleteById(id);
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping(value = "getLostForArea/{area}")
+    @GetMapping(value = "/getLostForArea/{area}")
     public ResponseEntity<Iterable<Post>> getAllLostForArea(@PathVariable String area){
         return ResponseEntity.ok(postService.findAllByStateAndArea(true,area));
     }
 
-    @GetMapping(value = "getSearchedForArea/{area}")
+    @GetMapping(value = "/getSearchedForArea/{area}")
     public ResponseEntity<Iterable<Post>> getAllSearchedForArea(@PathVariable String area){
         return ResponseEntity.ok(postService.findAllByStateAndArea(false,area));
     }
 
-    @GetMapping(value = "getAllUsersPosts/{login}")
+    @GetMapping(value = "/getAllUsersPosts/{login}")
     public ResponseEntity<Iterable<Post>> getAllUsersPosts(@PathVariable String login){
         return ResponseEntity.ok(postService.findAllUsersPosts(login));
+    }
+
+    @GetMapping(value = "/getAllPosts")
+    public ResponseEntity<Iterable<Post>> getAllPosts(){
+        return ResponseEntity.ok(postService.findAll());
     }
 
     @PostMapping(value = "/updatePicture")
