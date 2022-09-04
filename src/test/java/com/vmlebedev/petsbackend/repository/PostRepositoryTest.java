@@ -48,24 +48,42 @@ class PostRepositoryTest {
 
     @Test
     void findAllByArea() {
-
+        init();
+        List<Post> posts = postRepository.findAllByArea("testArea");
+        Assertions.assertEquals(posts.size(),3);
     }
 
     @Test
     void findAllByState() {
+        init();
+        List<Post> posts = postRepository.findAllByState(true);
+        Assertions.assertEquals(posts.size(),3);
     }
 
     @Test
     void findAllByStateAndArea() {
+        init();
+        List<Post> posts = postRepository.findAllByStateAndArea(true,"testArea");
+        Assertions.assertEquals(posts.size(),3);
     }
 
     @Test
     void findAllByLogin() {
+        init();
+        List<Post> posts = postRepository.findAllByLogin("testLogin");
+        Assertions.assertEquals(posts.size(),3);
     }
 
-    @Test
-    void updatePosts() {
-    }
 
+    private void init(){
+        PostBuilder builder = new ClassicPostBuilder();
+        PostDirector postDirector = new PostDirector(builder);
+        Post post1 = postDirector.createPost(null,"testAddress","testArea","testDescr","testLogin","testHandler",true,"testProfImg");
+        Post post2 = postDirector.createPost(null,"testAddress2","testArea","testDescr2","testLogin","testHandler2",true,"testProfImg2");
+        Post post3 = postDirector.createPost(null,"testAddress3","testArea","testDescr3","testLogin","testHandler3",true,"testProfImg3");
+        postRepository.save(post1);
+        postRepository.save(post2);
+        postRepository.save(post3);
+    }
 
 }
