@@ -3,6 +3,7 @@ package com.vmlebedev.petsbackend.controllers;
 import com.vmlebedev.petsbackend.models.Conversation;
 import com.vmlebedev.petsbackend.services.ConversationService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -21,7 +22,8 @@ public class ConversationController {
         this.conversationService = conversationService;
     }
 
-    @PostMapping(value = "/saveConversation")
+    @RequestMapping(value = "/saveConversation", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
     public ResponseEntity<Conversation> createConversation(@RequestBody Conversation conversation){
         if(conversationService.checkConversation(conversation)){
             Conversation newConversation = conversationService.saveConversation(conversation);

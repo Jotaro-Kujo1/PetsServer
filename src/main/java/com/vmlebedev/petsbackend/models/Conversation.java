@@ -6,10 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Data
@@ -22,8 +19,12 @@ public class Conversation {
     @GeneratedValue(generator = "system-uuid")
     @GenericGenerator(name = "system-uuid", strategy = "uuid")
     private String id;
-    @JsonProperty("senderLogin")
+    @JsonProperty("sender_login")
+    @Column(name = "sender_login")
     private String senderLogin;
-    @JsonProperty("receiverLogin")
+    @JsonProperty("receiver_login")
+    @Column(name = "receiver_login")
     private String receiverLogin;
+    @JsonProperty("profimg")
+    private String profimg;
 }

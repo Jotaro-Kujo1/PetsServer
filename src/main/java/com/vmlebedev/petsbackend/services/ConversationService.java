@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class ConversationService {
@@ -17,6 +18,8 @@ public class ConversationService {
     }
 
     public Conversation saveConversation(Conversation conversation) {
+        String uniqueKey = UUID.randomUUID().toString();
+        conversation.setId(uniqueKey);
         return conversationRepository.save(conversation);
     }
 
