@@ -33,6 +33,13 @@ class ConversationRepositoryTest {
         Assertions.assertNotNull(conversation);
     }
 
+    @Test
+    public void getConversationsForUser(){
+        saveConversationTest();
+        List<Conversation> conversations = conversationRepository.findAllBySenderLogin("testSender");
+        Assertions.assertEquals(conversations.get(0).getSenderLogin(),"testSender");
+    }
+
 
     @Test
     public void updateConversationTest() {
