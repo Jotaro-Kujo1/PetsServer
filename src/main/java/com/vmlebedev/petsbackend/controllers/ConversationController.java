@@ -37,4 +37,9 @@ public class ConversationController {
             return ResponseEntity.status(404).build();
         }
     }
+
+    @GetMapping(value = "/getUsersConversations")
+    public ResponseEntity<Iterable<Conversation>> getAllUsersConversations(@RequestParam String sender_login){
+        return ResponseEntity.ok(conversationService.getAllUsersConversations(sender_login));
+    }
 }

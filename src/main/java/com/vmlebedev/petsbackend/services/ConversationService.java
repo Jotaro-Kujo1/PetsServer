@@ -37,4 +37,8 @@ public class ConversationService {
             return false;
         }else return true;
     }
+
+    public List<Conversation> getAllUsersConversations(String login){
+        return conversationRepository.findAllBySenderLogin(login);
+    }
 }
