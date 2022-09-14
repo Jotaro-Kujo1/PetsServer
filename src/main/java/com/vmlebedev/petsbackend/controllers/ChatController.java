@@ -2,33 +2,29 @@ package com.vmlebedev.petsbackend.controllers;
 
 import com.vmlebedev.petsbackend.models.Message;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.messaging.handler.annotation.MessageMapping;
-import org.springframework.messaging.handler.annotation.Payload;
-import org.springframework.messaging.handler.annotation.SendTo;
-import org.springframework.messaging.simp.SimpMessagingTemplate;
-import org.springframework.stereotype.Controller;
+import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Date;
+import java.time.LocalDateTime;
+import java.util.concurrent.ExecutionException;
 
-@Controller
-@ComponentScan("/config")
+import org.apache.camel.component.kafka.KafkaConstants;
+
+
+@RestController
 public class ChatController {
+    private KafkaTemplate<String,Message> kafkaTemplate;
 
     @Autowired
-    private SimpMessagingTemplate simpMessagingTemplate;
-
-    @MessageMapping("/message")
-    @SendTo("/chatroom/public")
-    public Message receiveMessage(@Payload Message message){
-        return message;
+    public ChatController(KafkaTemplate kafkaTemplate){
+        this.kafkaTemplate = kafkaTemplate;
     }
 
-    @MessageMapping("/private-message")
-    public Message recMessage(@Payload Message message){
-        message.setDate(new Date().toString());
-        simpMessagingTemplate.convertAndSendToUser(message.getReceiverName(),"/private",message);
-        System.out.println(message.toString());
-        return message;
+    @PostMapping(value = "/api/send", consumes = "application/json", produces = "application/json")
+    public void sendMessage(@RequestBody Message message) {
+        message.setTimestamp(LocalDateTime.now().toString());
+        kafkaTemplate.send("quickstart-events",message);
     }
 }

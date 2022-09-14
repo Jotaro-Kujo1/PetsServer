@@ -1,16 +1,15 @@
 package com.vmlebedev.petsbackend.models;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 
-@NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
-@ToString
 public class Message {
-    private String senderName;
-    private String receiverName;
+    private String sender_name;
+    private String receiver_name;
     private String message;
-    private String date;
-    private Status status;
+    private String timestamp;
 }
