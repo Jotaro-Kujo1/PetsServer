@@ -18,7 +18,7 @@ public class MessageListener {
     }
 
     @KafkaListener(
-            topics = "quickstart-events",
+            topics = "petsChat",
             groupId = "com.vmlebedev"
     )
     public void listen(Message message) {

@@ -1,7 +1,6 @@
 package com.vmlebedev.petsbackend.config;
 
 import com.vmlebedev.petsbackend.models.Message;
-import org.apache.camel.component.kafka.KafkaConstants;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.springframework.context.annotation.Bean;
@@ -42,3 +41,4 @@ public class ListenerConfig {
         return configurations;
     }
 }
+
