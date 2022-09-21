@@ -16,4 +16,5 @@ public class Message {
     private String receiver_name;
     private String message;
     private String timestamp;
+    private String profimg;
 }

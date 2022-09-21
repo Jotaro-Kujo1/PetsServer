@@ -20,6 +20,7 @@ import org.apache.camel.component.kafka.KafkaConstants;
 
 
 @RestController
+@CrossOrigin
 public class ChatController {
     private KafkaTemplate<String,Message> kafkaTemplate;
 
