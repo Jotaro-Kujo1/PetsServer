@@ -17,13 +17,23 @@ public class MessageListener {
         this.template = template;
     }
 
+
     @KafkaListener(
-            topics = "petsChat",
+            topics = "petsPrivate",
             groupId = "com.vmlebedev"
     )
     public void listen(Message message) {
         System.out.println(" Send from kafka listener ");
         template.convertAndSend("/topic/group", message);
+    }
+
+    @KafkaListener(
+            topics = "petsPrivate",
+            groupId = "com.vmlebedev"
+    )
+    public void listenPrivateMessage(Message message){
+        System.out.println(" Send from kafka private message ");
+        template.convertAndSendToUser(message.getReceiver_name(),"/topic/private",message);
     }
 
 }
