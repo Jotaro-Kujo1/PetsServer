@@ -6,7 +6,9 @@ import com.vmlebedev.petsbackend.repository.RaitingCounterRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 @Service
@@ -28,6 +30,11 @@ public class RaitingCounterService {
         return !check;
     }
 
+    public boolean checkIfExist(String login){
+        boolean check = findAll().stream().anyMatch(s -> s.equals(login));
+        return check;
+    }
+
     public Raiting saveRaiting(Raiting raiting){
         String uniqueKey = UUID.randomUUID().toString();
         raiting.setId(uniqueKey);
@@ -41,5 +48,11 @@ public class RaitingCounterService {
 
     public int getLikesAmount(String login){
         return repository.findAllByLogin(login).getRaitingLogins().size();
+    }
+
+    public void updateLikers(Raiting raiting){
+        Set<UserForRaiting> userForRaitings = (Set<UserForRaiting>) repository.findAllByLogin(raiting.getLogin());
+        userForRaitings.add((UserForRaiting) raiting.getRaitingLogins());
+        repository.updateLikers(userForRaitings,raiting.getLogin());
     }
 }
