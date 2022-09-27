@@ -38,4 +38,8 @@ public class RaitingCounterService {
         }
         return repository.save(raiting);
     }
+
+    public int getLikesAmount(String login){
+        return repository.findAllByLogin(login).getRaitingLogins().size();
+    }
 }

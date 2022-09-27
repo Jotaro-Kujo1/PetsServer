@@ -36,4 +36,8 @@ public class RaitingCounterController {
         }
     }
 
+    @GetMapping(value = "/getLikesAmount")
+    public ResponseEntity<Integer> getLikesAmount(@RequestParam String login){
+        return ResponseEntity.ok(service.getLikesAmount(login));
+    }
 }
