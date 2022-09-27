@@ -31,7 +31,7 @@ public class RaitingCounterService {
     }
 
     public boolean checkIfExist(String login){
-        boolean check = findAll().stream().anyMatch(s -> s.equals(login));
+        boolean check = findAll().stream().anyMatch(s -> s.getLogin().equals(login));
         return check;
     }
 
@@ -47,12 +47,10 @@ public class RaitingCounterService {
     }
 
     public int getLikesAmount(String login){
-        return repository.findAllByLogin(login).getRaitingLogins().size();
+        if(checkIfExist(login)){//true
+            return repository.findAllByLogin(login).getRaitingLogins().size();
+        }else return 0;
     }
 
-    public void updateLikers(Raiting raiting){
-        Set<UserForRaiting> userForRaitings = (Set<UserForRaiting>) repository.findAllByLogin(raiting.getLogin());
-        userForRaitings.add((UserForRaiting) raiting.getRaitingLogins());
-        repository.updateLikers(userForRaitings,raiting.getLogin());
-    }
+
 }

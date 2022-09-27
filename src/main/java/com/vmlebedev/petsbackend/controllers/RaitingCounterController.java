@@ -32,15 +32,12 @@ public class RaitingCounterController {
                     .toUri();
             return ResponseEntity.created(location).build();
         }else {
-            service.updateLikers(raiting);
             return (ResponseEntity<Raiting>) ResponseEntity.status(200);
         }
     }
 
     @GetMapping(value = "/getLikesAmount")
     public ResponseEntity<Integer> getLikesAmount(@RequestParam String login){
-        if(service.checkIfExist(login)){
-            return ResponseEntity.ok(service.getLikesAmount(login));
-        }else return ResponseEntity.ok(0);
+        return ResponseEntity.ok(service.getLikesAmount(login));
     }
 }
