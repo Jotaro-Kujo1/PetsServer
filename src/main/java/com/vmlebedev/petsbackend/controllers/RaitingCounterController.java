@@ -40,4 +40,9 @@ public class RaitingCounterController {
     public ResponseEntity<Integer> getLikesAmount(@RequestParam String login){
         return ResponseEntity.ok(service.getLikesAmount(login));
     }
+
+    @GetMapping(value = "/find")
+    public ResponseEntity<Raiting> getRait(@RequestParam String login){
+        return ResponseEntity.ok(service.findByLog(login));
+    }
 }

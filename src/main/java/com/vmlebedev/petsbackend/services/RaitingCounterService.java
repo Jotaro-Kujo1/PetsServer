@@ -3,6 +3,7 @@ package com.vmlebedev.petsbackend.services;
 import com.vmlebedev.petsbackend.models.Raiting;
 import com.vmlebedev.petsbackend.models.UserForRaiting;
 import com.vmlebedev.petsbackend.repository.RaitingCounterRepository;
+import com.vmlebedev.petsbackend.repository.UserForRaitingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,10 +16,12 @@ import java.util.UUID;
 public class RaitingCounterService {
 
     private RaitingCounterRepository repository;
+    private UserForRaitingRepository userForRaitingRepository;
 
     @Autowired
-    public RaitingCounterService(RaitingCounterRepository repository){
+    public RaitingCounterService(RaitingCounterRepository repository,UserForRaitingRepository userForRaitingRepository){
         this.repository = repository;
+        this.userForRaitingRepository = userForRaitingRepository;
     }
 
     public List<Raiting> findAll(){
@@ -42,15 +45,21 @@ public class RaitingCounterService {
              ) {
             uniqueKey = UUID.randomUUID().toString();
             i.setId(uniqueKey);
+
         }
         return repository.save(raiting);
     }
 
     public int getLikesAmount(String login){
         if(checkIfExist(login)){//true
-            return repository.findAllByLogin(login).getRaitingLogins().size();
+            Raiting raiting = repository.findAllByLogin(login);
+            return userForRaitingRepository.findAllByRaiting(raiting).size();
+            //return repository.findAllByLogin(login).getRaitingLogins().size();
         }else return 0;
     }
 
+    public Raiting findByLog(String login){
+        return repository.findAllByLogin(login);
+    }
 
 }

@@ -1,5 +1,6 @@
 package com.vmlebedev.petsbackend.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -21,5 +22,6 @@ public class UserForRaiting {
     private String id;
     @JsonProperty("liker")
     private String liker;
-
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private Raiting raiting;
 }
