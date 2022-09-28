@@ -23,6 +23,7 @@ public class RaitingCounterController {
 
     @PostMapping(value = "/createRaiting")
     public ResponseEntity<Raiting> createRaiting(@RequestBody Raiting raiting){
+
         if(service.checkIfExist(raiting)){
             Raiting newRaiting = service.saveRaiting(raiting);
             URI location = ServletUriComponentsBuilder
@@ -32,8 +33,10 @@ public class RaitingCounterController {
                     .toUri();
             return ResponseEntity.created(location).build();
         }else {
+            service.addNewLiker(raiting);
             return (ResponseEntity<Raiting>) ResponseEntity.status(200);
         }
+
     }
 
     @GetMapping(value = "/getLikesAmount")
@@ -41,8 +44,6 @@ public class RaitingCounterController {
         return ResponseEntity.ok(service.getLikesAmount(login));
     }
 
-    @GetMapping(value = "/find")
-    public ResponseEntity<Raiting> getRait(@RequestParam String login){
-        return ResponseEntity.ok(service.findByLog(login));
-    }
+
+
 }
