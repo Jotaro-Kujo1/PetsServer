@@ -91,7 +91,15 @@ public class RaitingCounterService {
         Set<UserForRaiting> tmpLikersSet = raiting.getTmpLogins();
 
         for (UserForRaiting oldLiker : oldLikers) {
-            tmpLikersSet.add(new UserForRaiting("", oldLiker.getLiker(), null));
+            boolean flag = false;
+            for (UserForRaiting i:
+                 tmpLikersSet) {
+                if(i.getLiker().equals(oldLiker.getLiker())){
+                    flag = true;
+                }
+            }
+            if(!flag)tmpLikersSet.add(new UserForRaiting("", oldLiker.getLiker(), null));
+
         }
 
         for (UserForRaiting i:
