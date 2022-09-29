@@ -4,8 +4,10 @@ import com.vmlebedev.petsbackend.models.Raiting;
 import com.vmlebedev.petsbackend.models.UserForRaiting;
 import org.springframework.data.repository.CrudRepository;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 public interface UserForRaitingRepository extends CrudRepository<UserForRaiting,String> {
     List<UserForRaiting> findAllByRaiting(Raiting raiting);
+
 }

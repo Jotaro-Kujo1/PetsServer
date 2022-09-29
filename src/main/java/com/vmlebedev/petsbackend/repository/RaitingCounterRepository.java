@@ -12,9 +12,6 @@ import java.util.Set;
 
 public interface RaitingCounterRepository extends CrudRepository<Raiting, String> {
     Raiting findAllByLogin(String login);
-
     @Transactional
-    @Modifying
-    @Query(value = "update Raiting u set u.raitingLogins =: raitingLogins where u.login =: login")
-    void updateLikers(@Param(value = "raitingLogins") Set<UserForRaiting> raitingLogins, @Param(value = "login")String login);
+    void deleteByLogin(String login);
 }

@@ -22,7 +22,7 @@ public class RaitingCounterController {
     }
 
     @PostMapping(value = "/createRaiting")
-    public ResponseEntity<Raiting> createRaiting(@RequestBody Raiting raiting){
+    public ResponseEntity<?> createRaiting(@RequestBody Raiting raiting){
 
         if(service.checkIfExist(raiting)){
             Raiting newRaiting = service.saveRaiting(raiting);
@@ -33,8 +33,8 @@ public class RaitingCounterController {
                     .toUri();
             return ResponseEntity.created(location).build();
         }else {
-            service.addNewLiker(raiting);
-            return (ResponseEntity<Raiting>) ResponseEntity.status(200);
+            service.updateLikers(raiting);
+            return ResponseEntity.status(200).build();
         }
 
     }
