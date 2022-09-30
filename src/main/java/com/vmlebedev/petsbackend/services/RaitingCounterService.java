@@ -59,25 +59,7 @@ public class RaitingCounterService {
         }else return 0;
     }
 
-    public void addNewLiker(Raiting raiting){
-        //id,liker,raiting
-        raiting.setRaitingLogins(raiting.getTmpLogins());
 
-        UserForRaiting [] liker = raiting.getRaitingLogins().toArray(new UserForRaiting[0]);
-
-        String uniqueKey = "";
-
-        for (UserForRaiting i:
-                raiting.getRaitingLogins()) {
-            uniqueKey = UUID.randomUUID().toString();
-            i.setId(uniqueKey);
-            i.setRaiting(raiting);
-        }
-
-
-
-        userForRaitingRepository.save(new UserForRaiting(raiting.getId(), liker[0].getLiker(),raiting));
-    }
 
 
     public void updateLikers(Raiting raiting){

@@ -34,7 +34,7 @@ public class RaitingCounterController {
             return ResponseEntity.created(location).build();
         }else {
             service.updateLikers(raiting);
-            return ResponseEntity.status(200).build();
+            return ResponseEntity.status(201).build();
         }
 
     }
