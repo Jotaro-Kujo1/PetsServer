@@ -9,5 +9,4 @@ import java.util.List;
 
 public interface UserForRaitingRepository extends CrudRepository<UserForRaiting,String> {
     List<UserForRaiting> findAllByRaiting(Raiting raiting);
-
 }

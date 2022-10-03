@@ -23,7 +23,6 @@ class RaitingCounterRepositoryTest {
         raiting.setLogin("test");
         raitingCounterRepository.save(raiting);
         Assertions.assertNotNull(raiting.getId());
-        raiting.getId();
     }
 
     @Test

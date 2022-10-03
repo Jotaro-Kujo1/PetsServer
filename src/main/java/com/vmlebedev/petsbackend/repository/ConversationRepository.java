@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface ConversationRepository extends CrudRepository<Conversation, String> {
     List<Conversation> findAllBySenderLogin(String login);
+
 }
