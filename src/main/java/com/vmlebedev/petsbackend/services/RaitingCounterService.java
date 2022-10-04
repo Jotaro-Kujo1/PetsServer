@@ -1,5 +1,6 @@
 package com.vmlebedev.petsbackend.services;
 
+import com.vmlebedev.petsbackend.models.Comment;
 import com.vmlebedev.petsbackend.models.Raiting;
 import com.vmlebedev.petsbackend.models.UserForRaiting;
 import com.vmlebedev.petsbackend.repository.RaitingCounterRepository;

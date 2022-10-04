@@ -38,4 +38,11 @@ public class CommentController {
         }
     }
 
+    @GetMapping(value = "/getComments")
+    public ResponseEntity<Iterable<Comment>> getComments(@RequestParam String receiver_login){
+        if(commentService.getAllCommentsForUser(receiver_login) != null){
+            return ResponseEntity.ok(commentService.getAllCommentsForUser(receiver_login));
+        }else return ResponseEntity.status(204).build();
+    }
+
 }

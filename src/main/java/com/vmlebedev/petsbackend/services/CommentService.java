@@ -29,6 +29,11 @@ public class CommentService {
         return !check;
     }
 
+    public boolean checkIfExist(String login){
+        boolean check = findAll().stream().anyMatch(s -> s.getReceiverLogin().equals(login));
+        return check;
+    }
+
     public Receiver saveReceiver(Receiver receiver){
         String uniqueKey = UUID.randomUUID().toString();
         receiver.setId(uniqueKey);
@@ -69,5 +74,11 @@ public class CommentService {
 
         commentRepository.deleteByReceiverLogin(receiver.getReceiverLogin());
         commentRepository.save(receiver);
+    }
+
+    public List<Comment> getAllCommentsForUser(String login){
+        if(checkIfExist(login)){
+            return commentRepository.findAllByReceiverLogin(login).getComments();
+        }else return null;
     }
 }
