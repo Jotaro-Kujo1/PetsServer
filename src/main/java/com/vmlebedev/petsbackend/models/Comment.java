@@ -30,4 +30,6 @@ public class Comment {
     private String text;
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Receiver receiver_login;
+    @JsonProperty("date")
+    private String date;
 }

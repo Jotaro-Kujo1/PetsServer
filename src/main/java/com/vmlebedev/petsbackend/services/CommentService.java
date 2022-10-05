@@ -7,6 +7,8 @@ import com.vmlebedev.petsbackend.repository.CommentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -35,19 +37,25 @@ public class CommentService {
     }
 
     public Receiver saveReceiver(Receiver receiver){
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm");
+        String date;
         String uniqueKey = UUID.randomUUID().toString();
         receiver.setId(uniqueKey);
         receiver.setComments(receiver.getTmpComments());
         for (Comment i: receiver.getComments()
         ) {
+            date = formatter.format(new Date());
             uniqueKey = UUID.randomUUID().toString();
             i.setId(uniqueKey);
             i.setReceiver_login(receiver);
+            i.setDate(date);
         }
         return commentRepository.save(receiver);
     }
 
     public void updateComments(Receiver receiver){
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm");
+        String date;
         receiver.setComments(receiver.getTmpComments());
         String uniqueKey = "";
 
@@ -59,15 +67,17 @@ public class CommentService {
 
         for (Comment i:
              oldComments) {
-            tmpComments.add(new Comment("",i.getSenderLogin(),i.getProfimg(),i.getText(),null));
+            tmpComments.add(new Comment("",i.getSenderLogin(),i.getProfimg(),i.getText(),null,i.getDate()));
         }
         //tmpComments.addAll(oldComments);
 
         for (Comment i:
              tmpComments) {
+            date = formatter.format(new Date());
             uniqueKey = UUID.randomUUID().toString();
             i.setId(uniqueKey);
             i.setReceiver_login(receiver);
+            if(i.getDate() == null)i.setDate(date);
         }
 
         receiver.setComments(tmpComments);
