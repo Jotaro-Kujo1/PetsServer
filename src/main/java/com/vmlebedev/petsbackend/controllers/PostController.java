@@ -1,6 +1,8 @@
 package com.vmlebedev.petsbackend.controllers;
 
 import com.vmlebedev.petsbackend.models.Post;
+import com.vmlebedev.petsbackend.services.CommentService;
+import com.vmlebedev.petsbackend.services.ConversationService;
 import com.vmlebedev.petsbackend.services.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -8,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
 import java.net.URI;
 
 
@@ -16,10 +19,15 @@ import java.net.URI;
 @CrossOrigin
 public class PostController {
     private PostService postService;
+    private ConversationService conversationService;
+
+    private CommentService commentService;
 
     @Autowired
-    public PostController(PostService postService){
+    public PostController(PostService postService,ConversationService conversationService,CommentService commentService){
         this.postService = postService;
+        this.conversationService = conversationService;
+        this.commentService = commentService;
     }
 
 
@@ -90,6 +98,8 @@ public class PostController {
     @PostMapping(value = "/updatePicture")
     public ResponseEntity<?> updatePicture(@RequestParam String login, @RequestParam String profimg){
         postService.updatePictureAllUsersPosts(login,profimg);
+        conversationService.updatePictureAllConversations(login,profimg);
+        commentService.updatePictureAllConversations(login,profimg);
         return ResponseEntity.ok().build();
     }
 }

@@ -14,5 +14,8 @@ public interface CommentRepository extends CrudRepository<Receiver,String> {
     Receiver findAllByReceiverLogin(String login);
     @Transactional
     void deleteByReceiverLogin(String login);
-
+    @Transactional
+    @Modifying
+    @Query(value = "update Comment u set u.profimg = :profimg where u.senderLogin = :sender_login")
+    void updateComment(@Param(value = "sender_login")String login, @Param(value = "profimg")String profimg);
 }

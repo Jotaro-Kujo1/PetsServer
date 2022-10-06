@@ -41,4 +41,8 @@ public class ConversationService {
     public List<Conversation> getAllUsersConversations(String login){
         return conversationRepository.findAllBySenderLogin(login);
     }
+
+    public void updatePictureAllConversations(String login,String profimg){
+        conversationRepository.updateConversation(login,profimg);
+    }
 }

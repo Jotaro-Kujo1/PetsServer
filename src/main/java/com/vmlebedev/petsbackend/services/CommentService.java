@@ -91,4 +91,8 @@ public class CommentService {
             return commentRepository.findAllByReceiverLogin(login).getComments();
         }else return null;
     }
+
+    public void updatePictureAllConversations(String login,String profimg){
+        commentRepository.updateComment(login,profimg);
+    }
 }
