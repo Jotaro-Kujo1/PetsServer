@@ -55,9 +55,21 @@ class RaitingCounterServiceTest {
     @Test
     void saveRaiting() {
         Raiting raiting = new Raiting("testId","test",null,null);
-        when(raitingCounterService.saveRaiting(raiting)).thenReturn(raiting);
-        Raiting tmp = raitingCounterService.saveRaiting(raiting);
-        Assertions.assertEquals(raiting,tmp);
+        Set<UserForRaiting> tmp = new HashSet<>();
+        tmp.add(new UserForRaiting(null,"testLiker",null));
+        raiting.setRaitingLogins(tmp);
+        String uniqueKey = UUID.randomUUID().toString();
+        raiting.setId(uniqueKey);
+
+        for (UserForRaiting i: raiting.getRaitingLogins()
+        ) {
+            uniqueKey = UUID.randomUUID().toString();
+            i.setId(uniqueKey);
+            i.setRaiting(raiting);
+        }
+        when(raitingCounterRepository.save(raiting)).thenReturn(raiting);
+        Raiting tmpNew = raitingCounterRepository.save(raiting);
+        Assertions.assertEquals(raiting.getLogin(),tmpNew.getLogin());
     }
 
     @Test

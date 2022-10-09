@@ -2,6 +2,8 @@ package com.vmlebedev.petsbackend.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vmlebedev.petsbackend.models.Post;
+import com.vmlebedev.petsbackend.services.CommentService;
+import com.vmlebedev.petsbackend.services.ConversationService;
 import com.vmlebedev.petsbackend.services.PostService;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
@@ -35,6 +37,12 @@ class PostControllerTest {
 
     @MockBean
     private PostService postService;
+
+    @MockBean
+    private ConversationService conversationService;
+
+    @MockBean
+    private CommentService commentService;
 
 
     @Test
