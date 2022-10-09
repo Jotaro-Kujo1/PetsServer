@@ -35,28 +35,26 @@ class CommentRepositoryTest {
     @Test
     public void updateUser(){
         init();
+        Receiver tmp = new Receiver();
         Optional<Receiver> comment = commentRepository.findById("testId1");
-        comment.get().setReceiverLogin("newTestLogin1");
-        Receiver changeReceiver = commentRepository.save(comment.get());
+        if(comment.isPresent()) tmp = comment.get();
+        tmp.setReceiverLogin("newTestLogin1");
+        Receiver changeReceiver = commentRepository.save(tmp);
         Assertions.assertEquals(changeReceiver.getReceiverLogin(),"newTestLogin1");
     }
 
     @Test
-    public void deleteUser(){
-        init();
-        Receiver tmp = new Receiver();
-        commentRepository.deleteById("testId1");
-        Optional<Receiver> comment = commentRepository.findById("testId1");
-        if(comment.isEmpty()) tmp = null;
-        Assertions.assertNull(tmp);
-    }
-
-    @Test
     void findAllByReceiverLogin() {
+        init();
+        Assertions.assertEquals(commentRepository.findAllByReceiverLogin("testLogin1").getReceiverLogin(),"testLogin1");
     }
 
     @Test
     void deleteByReceiverLogin() {
+        init();
+        commentRepository.deleteByReceiverLogin("testLogin1");
+        Receiver comment = commentRepository.findAllByReceiverLogin("testLogin1");
+        Assertions.assertNull(comment);
     }
 
     @Test
@@ -69,8 +67,8 @@ class CommentRepositoryTest {
         Receiver receiver3 = new Receiver();
 
         receiver1.setId("testId1");
-        receiver2.setId("testId1");
-        receiver3.setId("testId1");
+        receiver2.setId("testId2");
+        receiver3.setId("testId3");
 
         receiver1.setReceiverLogin("testLogin1");
         receiver2.setReceiverLogin("testLogin2");
