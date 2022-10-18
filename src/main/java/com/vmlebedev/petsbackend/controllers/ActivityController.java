@@ -57,4 +57,5 @@ public class ActivityController {
     public ResponseEntity<Activity> getActivity(@RequestParam String login){
         return ResponseEntity.ok(activityService.findAllByLogin(login));
     }
+
 }
