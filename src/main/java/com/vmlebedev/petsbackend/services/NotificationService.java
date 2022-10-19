@@ -2,12 +2,14 @@ package com.vmlebedev.petsbackend.services;
 
 import com.vmlebedev.petsbackend.models.Notification;
 import com.vmlebedev.petsbackend.repository.NotificationRepository;
+import org.aspectj.weaver.ast.Not;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
-import java.util.List;
-import java.util.UUID;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.*;
 
 @Service
 public class NotificationService {
@@ -22,11 +24,15 @@ public class NotificationService {
     public Notification saveNotification(Notification notification){
         String uniqueKey = UUID.randomUUID().toString();
         notification.setId(uniqueKey);
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm");
+        notification.setDate(formatter.format(new Date()));
         return notificationRepository.save(notification);
     }
 
     public List<Notification> getAllNotifications(String login){
-        return notificationRepository.findAllByReceiverLogin(login);
+        List<Notification> list = notificationRepository.findAllByReceiverLogin(login);
+        Collections.sort(list);
+        return list;
     }
 
     public void deleteNotification(String id){
