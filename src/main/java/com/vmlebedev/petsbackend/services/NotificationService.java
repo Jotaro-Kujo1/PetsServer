@@ -38,4 +38,8 @@ public class NotificationService {
     public void deleteNotification(String id){
         notificationRepository.deleteById(id);
     }
+
+    public int getNotificationsAmount(String login){
+        return notificationRepository.findAllByReceiverLogin(login).size();
+    }
 }

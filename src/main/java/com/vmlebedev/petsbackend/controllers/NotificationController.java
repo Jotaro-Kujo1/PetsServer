@@ -42,4 +42,9 @@ public class NotificationController {
         notificationService.deleteNotification(id);
         return ResponseEntity.noContent().build();
     }
+
+    @GetMapping("/getNotificationsAmount")
+    public ResponseEntity<Integer> getNotificationsAmount(@RequestParam String receiver_login){
+        return ResponseEntity.ok(notificationService.getNotificationsAmount(receiver_login));
+    }
 }
