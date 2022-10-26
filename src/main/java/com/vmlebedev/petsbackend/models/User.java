@@ -1,6 +1,7 @@
 package com.vmlebedev.petsbackend.models;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -23,4 +24,7 @@ public class User {
     private String login;
     @JsonProperty("password")
     private String password;
+    @JsonProperty("verified")
+    @NotNull
+    private boolean verified;
 }
