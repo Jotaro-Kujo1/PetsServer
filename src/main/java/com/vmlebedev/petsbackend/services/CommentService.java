@@ -39,14 +39,10 @@ public class CommentService {
     public Receiver saveReceiver(Receiver receiver){
         SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm");
         String date;
-        String uniqueKey = UUID.randomUUID().toString();
-        receiver.setId(uniqueKey);
         receiver.setComments(receiver.getTmpComments());
         for (Comment i: receiver.getComments()
         ) {
             date = formatter.format(new Date());
-            uniqueKey = UUID.randomUUID().toString();
-            i.setId(uniqueKey);
             i.setReceiver_login(receiver);
             i.setDate(date);
         }

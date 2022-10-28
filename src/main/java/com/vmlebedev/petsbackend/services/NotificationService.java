@@ -22,8 +22,6 @@ public class NotificationService {
     }
 
     public Notification saveNotification(Notification notification){
-        String uniqueKey = UUID.randomUUID().toString();
-        notification.setId(uniqueKey);
         SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm");
         notification.setDate(formatter.format(new Date()));
         return notificationRepository.save(notification);

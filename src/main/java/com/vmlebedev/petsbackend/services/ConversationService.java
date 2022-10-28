@@ -18,8 +18,6 @@ public class ConversationService {
     }
 
     public Conversation saveConversation(Conversation conversation) {
-        String uniqueKey = UUID.randomUUID().toString();
-        conversation.setId(uniqueKey);
         return conversationRepository.save(conversation);
     }
 

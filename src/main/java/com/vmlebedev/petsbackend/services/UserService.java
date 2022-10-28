@@ -26,8 +26,6 @@ public class UserService {
         return (List<User>) userRepository.findAll();
     }
     public User saveUser(User user){
-        String uniqueKey = UUID.randomUUID().toString();
-        user.setId(uniqueKey);
         return userRepository.save(user);
     }
     public void deleteById(String id){

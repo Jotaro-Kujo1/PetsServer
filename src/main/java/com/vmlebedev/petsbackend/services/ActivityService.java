@@ -39,8 +39,6 @@ public class ActivityService {
 
     public Activity createActivity(Activity activity){
         if(checkIfExist(activity)){
-            String uniqueKey = UUID.randomUUID().toString();
-            activity.setId(uniqueKey);
             return activityRepository.save(activity);
         }return null;
     }

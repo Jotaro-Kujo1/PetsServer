@@ -40,13 +40,9 @@ public class RaitingCounterService {
     }
 
     public Raiting saveRaiting(Raiting raiting){
-        String uniqueKey = UUID.randomUUID().toString();
-        raiting.setId(uniqueKey);
         raiting.setRaitingLogins(raiting.getTmpLogins());
         for (UserForRaiting i: raiting.getRaitingLogins()
              ) {
-            uniqueKey = UUID.randomUUID().toString();
-            i.setId(uniqueKey);
             i.setRaiting(raiting);
         }
         return repository.save(raiting);
