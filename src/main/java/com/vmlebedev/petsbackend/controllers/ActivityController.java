@@ -1,8 +1,10 @@
 package com.vmlebedev.petsbackend.controllers;
 
+import com.vmlebedev.petsbackend.convertors.ActivityView2Activity;
 import com.vmlebedev.petsbackend.models.Activity;
 import com.vmlebedev.petsbackend.models.Conversation;
 import com.vmlebedev.petsbackend.services.ActivityService;
+import com.vmlebedev.petsbackend.views.ActivityView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,11 +17,13 @@ import java.net.URI;
 @CrossOrigin
 public class ActivityController {
 
-    private ActivityService activityService;
+    private final ActivityService activityService;
+    private final ActivityView2Activity converter;
 
     @Autowired
-    public ActivityController(ActivityService activityService){
+    public ActivityController(ActivityService activityService,ActivityView2Activity converter){
         this.activityService = activityService;
+        this.converter = converter;
     }
 
     @PostMapping(value = "/updateLikes")
@@ -41,7 +45,8 @@ public class ActivityController {
     }
 
     @PostMapping(value = "/createActivity")
-    public ResponseEntity<Activity> createActivity(@RequestBody Activity activity){
+    public ResponseEntity<Activity> createActivity(@RequestBody ActivityView activityView){
+        Activity activity = converter.convert(activityView);
         if(activityService.checkIfExist(activity)){
             Activity newActivity = activityService.createActivity(activity);
             URI location = ServletUriComponentsBuilder
