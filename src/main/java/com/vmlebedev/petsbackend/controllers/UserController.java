@@ -1,7 +1,9 @@
 package com.vmlebedev.petsbackend.controllers;
 
+import com.vmlebedev.petsbackend.convertors.UserView2User;
 import com.vmlebedev.petsbackend.models.User;
 import com.vmlebedev.petsbackend.services.UserService;
+import com.vmlebedev.petsbackend.views.UserView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,11 +16,12 @@ import java.net.URI;
 @RequestMapping("/forUsers")
 @CrossOrigin
 public class UserController {
-    private UserService userService;
-
+    private final UserService userService;
+    private final UserView2User converter;
     @Autowired
-    public UserController(UserService userService) {
+    public UserController(UserService userService,UserView2User converter) {
         this.userService = userService;
+        this.converter = converter;
     }
 
     @GetMapping("/user")
@@ -42,7 +45,8 @@ public class UserController {
 
 
     @RequestMapping(value = "/user", method = {RequestMethod.POST})
-    public ResponseEntity<User> createUser(@RequestBody User user){
+    public ResponseEntity<User> createUser(@RequestBody UserView userView){
+        User user = converter.convert(userView);
         if(userService.checkLogin(user)==null){
             User result = userService.saveUser(user);
             URI location = ServletUriComponentsBuilder
