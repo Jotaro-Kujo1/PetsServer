@@ -15,7 +15,7 @@ import java.util.UUID;
 @Service
 public class CommentService {
 
-    private CommentRepository commentRepository;
+    private final CommentRepository commentRepository;
 
     @Autowired
     public CommentService(CommentRepository commentRepository){
@@ -39,7 +39,7 @@ public class CommentService {
     public Receiver saveReceiver(Receiver receiver){
         SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm");
         String date;
-        receiver.setComments(receiver.getTmpComments());
+        //receiver.setComments(receiver.getTmpComments());
         for (Comment i: receiver.getComments()
         ) {
             date = formatter.format(new Date());
@@ -52,12 +52,10 @@ public class CommentService {
     public void updateComments(Receiver receiver){
         SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm");
         String date;
-        receiver.setComments(receiver.getTmpComments());
-        String uniqueKey = "";
+
 
         Receiver oldReceiver = commentRepository.findAllByReceiverLogin(receiver.getReceiverLogin());
 
-        //List<Comment> oldComments = oldReceiver.getComments();
         Comment [] oldComments = oldReceiver.getComments().toArray(new Comment[0]);
         List<Comment> tmpComments = receiver.getComments();
 
@@ -65,15 +63,12 @@ public class CommentService {
              oldComments) {
             tmpComments.add(new Comment("",i.getSenderLogin(),i.getProfimg(),i.getText(),null,i.getDate()));
         }
-        //tmpComments.addAll(oldComments);
 
         for (Comment i:
              tmpComments) {
             date = formatter.format(new Date());
-            uniqueKey = UUID.randomUUID().toString();
-            i.setId(uniqueKey);
             i.setReceiver_login(receiver);
-            if(i.getDate() == null)i.setDate(date);
+            if(i.getDate().equals(""))i.setDate(date);
         }
 
         receiver.setComments(tmpComments);

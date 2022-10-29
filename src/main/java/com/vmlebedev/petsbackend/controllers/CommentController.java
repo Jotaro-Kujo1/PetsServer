@@ -1,8 +1,11 @@
 package com.vmlebedev.petsbackend.controllers;
 
+import com.vmlebedev.petsbackend.convertors.CommentView2Comment;
+import com.vmlebedev.petsbackend.convertors.ReceiverView2Receiver;
 import com.vmlebedev.petsbackend.models.Comment;
 import com.vmlebedev.petsbackend.models.Receiver;
 import com.vmlebedev.petsbackend.services.CommentService;
+import com.vmlebedev.petsbackend.views.ReceiverView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,15 +18,18 @@ import java.net.URI;
 @CrossOrigin
 public class CommentController {
 
-    private CommentService commentService;
+    private final CommentService commentService;
+    private final ReceiverView2Receiver converter;
 
     @Autowired
-    public CommentController(CommentService commentService){
+    public CommentController(CommentService commentService,ReceiverView2Receiver converter){
         this.commentService = commentService;
+        this.converter = converter;
     }
 
     @PostMapping(value = "/createComment")
-    public ResponseEntity<Receiver> createComment(@RequestBody Receiver receiver){
+    public ResponseEntity<Receiver> createComment(@RequestBody ReceiverView receiverView){
+        Receiver receiver = converter.convert(receiverView);
         if(commentService.checkIfExist(receiver)){
             Receiver newReceiver = commentService.saveReceiver(receiver);
             URI location = ServletUriComponentsBuilder

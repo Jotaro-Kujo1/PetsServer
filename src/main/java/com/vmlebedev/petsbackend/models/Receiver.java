@@ -30,7 +30,7 @@ public class Receiver {
             orphanRemoval = true)
     @JsonIgnore
     private List<Comment> comments;
-    @Transient
-    @JsonProperty("comments")
-    private List<Comment> tmpComments;
+    //@Transient
+    //@JsonProperty("comments")
+    //private List<Comment> tmpComments;
 }
