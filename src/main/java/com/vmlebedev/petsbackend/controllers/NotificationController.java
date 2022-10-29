@@ -1,7 +1,9 @@
 package com.vmlebedev.petsbackend.controllers;
 
+import com.vmlebedev.petsbackend.convertors.NotificationView2Notification;
 import com.vmlebedev.petsbackend.models.Notification;
 import com.vmlebedev.petsbackend.services.NotificationService;
+import com.vmlebedev.petsbackend.views.NotificationView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,15 +16,18 @@ import java.net.URI;
 @CrossOrigin
 public class NotificationController {
 
-    private NotificationService notificationService;
+    private final NotificationService notificationService;
+    private final NotificationView2Notification converter;
 
     @Autowired
-    public NotificationController(NotificationService notificationService){
+    public NotificationController(NotificationService notificationService,NotificationView2Notification converter){
         this.notificationService = notificationService;
+        this.converter = converter;
     }
 
     @PostMapping("/createNotification")
-    public ResponseEntity<Notification> createNotification(@RequestBody Notification notification){
+    public ResponseEntity<Notification> createNotification(@RequestBody NotificationView notificationView){
+        Notification notification = converter.convert(notificationView);
         Notification newNotification = notificationService.saveNotification(notification);
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest()
