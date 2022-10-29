@@ -1,7 +1,9 @@
 package com.vmlebedev.petsbackend.controllers;
 
+import com.vmlebedev.petsbackend.convertors.ConversationView2Conversation;
 import com.vmlebedev.petsbackend.models.Conversation;
 import com.vmlebedev.petsbackend.services.ConversationService;
+import com.vmlebedev.petsbackend.views.ConversationView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -15,16 +17,19 @@ import java.net.URI;
 @CrossOrigin
 public class ConversationController {
 
-    private ConversationService conversationService;
+    private final ConversationService conversationService;
+    private final ConversationView2Conversation converter;
 
     @Autowired
-    public ConversationController(ConversationService conversationService){
+    public ConversationController(ConversationService conversationService,ConversationView2Conversation converter){
         this.conversationService = conversationService;
+        this.converter = converter;
     }
 
     @RequestMapping(value = "/saveConversation", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public ResponseEntity<Conversation> createConversation(@RequestBody Conversation conversation){
+    public ResponseEntity<Conversation> createConversation(@RequestBody ConversationView conversationView){
+        Conversation conversation = converter.convert(conversationView);
         if(conversationService.checkConversation(conversation)){
             Conversation newConversation = conversationService.saveConversation(conversation);
             URI location = ServletUriComponentsBuilder
