@@ -3,7 +3,7 @@ package com.vmlebedev.petsbackend.postBuilder;
 import com.vmlebedev.petsbackend.models.Post;
 
 public class PostDirector {
-    private PostBuilder builder;
+    private final PostBuilder builder;
 
     public PostDirector(PostBuilder builder){
         super();
@@ -18,6 +18,13 @@ public class PostDirector {
                 .createImg(arr)
                 .createPlaceOfResidence(address,area)
                 .createDataFromQuery(description,login,handler,state,profimg)
+                .build();
+    }
+
+    public Post createSimplePost(byte[] img, String description, String address, String login, String handler, boolean state, String profimg){
+        return builder
+                .createImg(img)
+                .createSimplifiedDataFromQuery(description,address,login,handler,state,profimg)
                 .build();
     }
 }

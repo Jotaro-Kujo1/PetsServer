@@ -1,9 +1,11 @@
 package com.vmlebedev.petsbackend.controllers;
 
+import com.vmlebedev.petsbackend.convertors.PostView2Post;
 import com.vmlebedev.petsbackend.models.Post;
 import com.vmlebedev.petsbackend.services.CommentService;
 import com.vmlebedev.petsbackend.services.ConversationService;
 import com.vmlebedev.petsbackend.services.PostService;
+import com.vmlebedev.petsbackend.views.PostView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -18,16 +20,18 @@ import java.net.URI;
 @RequestMapping("/posts")
 @CrossOrigin
 public class PostController {
-    private PostService postService;
-    private ConversationService conversationService;
+    private final PostService postService;
+    private final ConversationService conversationService;
 
-    private CommentService commentService;
+    private final CommentService commentService;
+    private final PostView2Post converter;
 
     @Autowired
-    public PostController(PostService postService,ConversationService conversationService,CommentService commentService){
+    public PostController(PostService postService,ConversationService conversationService,CommentService commentService,PostView2Post converter){
         this.postService = postService;
         this.conversationService = conversationService;
         this.commentService = commentService;
+        this.converter = converter;
     }
 
 
@@ -45,7 +49,8 @@ public class PostController {
 
 
     @PostMapping(value = "/createPost")
-    public ResponseEntity<Post> createPost(@RequestBody Post post){
+    public ResponseEntity<Post> createPost(@RequestBody PostView postView){
+        Post post = converter.convert(postView);
         if(postService.checkPost(post)){
             Post newPost = postService.savePost(post);
             URI location = ServletUriComponentsBuilder

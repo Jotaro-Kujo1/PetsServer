@@ -63,6 +63,11 @@ public class ClassicPostBuilder implements PostBuilder {
     }
 
     @Override
+    public PostBuilder createSimplifiedDataFromQuery(String description, String address, String login, String handler, boolean state, String profimg) {
+        return null;
+    }
+
+    @Override
     public Post build() {
         return new Post(id,img,description,address,login,handler,date,area,state,profimg);
     }

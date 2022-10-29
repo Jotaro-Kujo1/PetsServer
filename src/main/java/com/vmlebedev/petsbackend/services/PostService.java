@@ -1,5 +1,6 @@
 package com.vmlebedev.petsbackend.services;
 
+import com.vmlebedev.petsbackend.convertors.PostView2Post;
 import com.vmlebedev.petsbackend.models.Post;
 import com.vmlebedev.petsbackend.postBuilder.ClassicPostBuilder;
 import com.vmlebedev.petsbackend.postBuilder.PostBuilder;
@@ -15,10 +16,11 @@ import java.util.*;
 
 @Service
 public class PostService {
-    private PostRepository postRepository;
+    private final PostRepository postRepository;
 
     @Autowired
-    public PostService (PostRepository postRepository){
+    public PostService (PostRepository postRepository)
+    {
         this.postRepository = postRepository;
     }
 
