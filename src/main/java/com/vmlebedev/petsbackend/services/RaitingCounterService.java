@@ -40,7 +40,6 @@ public class RaitingCounterService {
     }
 
     public Raiting saveRaiting(Raiting raiting){
-        raiting.setRaitingLogins(raiting.getTmpLogins());
         for (UserForRaiting i: raiting.getRaitingLogins()
              ) {
             i.setRaiting(raiting);
@@ -60,14 +59,13 @@ public class RaitingCounterService {
 
 
     public void updateLikers(Raiting raiting){
-        raiting.setRaitingLogins(raiting.getTmpLogins());
         String uniqueKey = "";
 
         Raiting oldRaiting = repository.findAllByLogin(raiting.getLogin());
 
         UserForRaiting [] oldLikers = oldRaiting.getRaitingLogins().toArray(new UserForRaiting[0]);
 
-        Set<UserForRaiting> tmpLikersSet = raiting.getTmpLogins();
+        Set<UserForRaiting> tmpLikersSet = raiting.getRaitingLogins();
 
         for (UserForRaiting oldLiker : oldLikers) {
             boolean flag = false;
@@ -83,8 +81,6 @@ public class RaitingCounterService {
 
         for (UserForRaiting i:
              tmpLikersSet) {
-            uniqueKey = UUID.randomUUID().toString();
-            i.setId(uniqueKey);
             i.setRaiting(raiting);
         }
 

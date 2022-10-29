@@ -1,7 +1,9 @@
 package com.vmlebedev.petsbackend.controllers;
 
+import com.vmlebedev.petsbackend.convertors.RaitingView2Raiting;
 import com.vmlebedev.petsbackend.models.Raiting;
 import com.vmlebedev.petsbackend.services.RaitingCounterService;
+import com.vmlebedev.petsbackend.views.RaitingView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,16 +16,18 @@ import java.net.URI;
 @CrossOrigin
 public class RaitingCounterController {
 
-    private RaitingCounterService service;
+    private final RaitingCounterService service;
+    private final RaitingView2Raiting converter;
 
     @Autowired
-    public RaitingCounterController(RaitingCounterService service){
+    public RaitingCounterController(RaitingCounterService service,RaitingView2Raiting converter){
         this.service = service;
+        this.converter = converter;
     }
 
     @PostMapping(value = "/createRaiting")
-    public ResponseEntity<?> createRaiting(@RequestBody Raiting raiting){
-
+    public ResponseEntity<?> createRaiting(@RequestBody RaitingView raitingView){
+        Raiting raiting = converter.convert(raitingView);
         if(service.checkIfExist(raiting)){
             Raiting newRaiting = service.saveRaiting(raiting);
             URI location = ServletUriComponentsBuilder

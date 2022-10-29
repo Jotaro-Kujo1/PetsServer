@@ -31,7 +31,5 @@ public class Raiting {
         orphanRemoval = true)
     @JsonIgnore
     private Set<UserForRaiting> raitingLogins;
-    @Transient
-    @JsonProperty("raitingLogins")
-    private Set<UserForRaiting> tmpLogins;
+
 }
