@@ -3,6 +3,7 @@ package com.vmlebedev.petsbackend.services;
 import com.vmlebedev.petsbackend.models.User;
 import com.vmlebedev.petsbackend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,11 +12,12 @@ import java.util.UUID;
 @Service//Показывает что это компонент спринга
 //Принимает запросы из вне и дёргает репозиторный метод
 public class UserService {
-    private UserRepository userRepository;
-
+    private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
     @Autowired//Автосвязывание(внедрение)
-    public UserService(UserRepository userRepository){
+    public UserService(UserRepository userRepository,PasswordEncoder passwordEncoder){
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
 
@@ -26,6 +28,7 @@ public class UserService {
         return (List<User>) userRepository.findAll();
     }
     public User saveUser(User user){
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepository.save(user);
     }
     public void deleteById(String id){
