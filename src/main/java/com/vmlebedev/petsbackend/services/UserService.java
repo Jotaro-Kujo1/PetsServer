@@ -40,7 +40,7 @@ public class UserService {
         boolean check =
                 findAll()
                     .stream()
-                        .anyMatch(s -> s.getLogin().equals(user.getLogin()) && s.getPassword().equals(user.getPassword()));
+                        .anyMatch(s -> s.getLogin().equals(user.getLogin()) && passwordEncoder.matches(user.getPassword(),s.getPassword()));
         if(check) {
             return user;
         }
