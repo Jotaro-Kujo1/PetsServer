@@ -6,6 +6,8 @@ import com.vmlebedev.petsbackend.models.Conversation;
 import com.vmlebedev.petsbackend.services.ActivityService;
 import com.vmlebedev.petsbackend.views.ActivityView;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.envers.repository.support.EnversRevisionRepositoryFactoryBean;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
