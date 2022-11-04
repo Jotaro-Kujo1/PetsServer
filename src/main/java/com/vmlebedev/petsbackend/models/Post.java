@@ -1,16 +1,21 @@
 package com.vmlebedev.petsbackend.models;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import jdk.jfr.Timestamp;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.aspectj.lang.annotation.Before;
 import org.hibernate.annotations.GenericGenerator;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 
@@ -19,6 +24,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name="posts", schema = "public")
+@EntityListeners(AuditingEntityListener.class)
 public class Post implements Comparable<Post>{
     @Id
     @JsonProperty("id")
@@ -43,6 +49,27 @@ public class Post implements Comparable<Post>{
     private boolean state;
     @JsonProperty("profimg")
     private String profimg;
+    @Column(name = "created_date")
+    @CreatedDate
+    @Timestamp
+    private Date createdDate;
+    @Column(name = "modified_date")
+    @LastModifiedDate
+    @Timestamp
+    private Date modifiedDate;
+
+    public Post(String id, byte[] img, String description, String address, String login, String handler, String date, String area, boolean state, String profimg) {
+        this.id = id;
+        this.img = img;
+        this.description = description;
+        this.address = address;
+        this.login = login;
+        this.handler = handler;
+        this.date = date;
+        this.area = area;
+        this.state = state;
+        this.profimg = profimg;
+    }
 
     private static List<Integer> treatment(Post post){
         String [] dat = new String[2];

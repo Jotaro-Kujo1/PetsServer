@@ -1,8 +1,12 @@
 package com.vmlebedev.petsbackend.models;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import jdk.jfr.Timestamp;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -16,6 +20,7 @@ import java.util.List;
 @Getter
 @Setter
 @Table(name = "notifications", schema = "public")
+@EntityListeners(AuditingEntityListener.class)
 public class Notification implements Comparable<Notification>{
     @Id
     @JsonProperty("id")
@@ -34,6 +39,23 @@ public class Notification implements Comparable<Notification>{
     private String receiverLogin;
     @JsonProperty("date")
     private String date;
+    @Column(name = "created_date")
+    @CreatedDate
+    @Timestamp
+    private Date createdDate;
+    @Column(name = "modified_date")
+    @LastModifiedDate
+    @Timestamp
+    private Date modifiedDate;
+
+    public Notification(String id, String profimg, String text, String senderLogin, String receiverLogin, String date) {
+        this.id = id;
+        this.profimg = profimg;
+        this.text = text;
+        this.senderLogin = senderLogin;
+        this.receiverLogin = receiverLogin;
+        this.date = date;
+    }
 
     private static List<Integer> treatment(Notification notification){
         String [] dat = new String[2];
